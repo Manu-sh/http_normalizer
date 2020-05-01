@@ -17,7 +17,7 @@ std::vector<std::string> parse(const std::string &http_url) {
 
 	const static std::array<int(*const)(char), FRAG+1> fun {
 
-		[] (char c) -> int { return 0xdeadbeef; }, // NOP
+		[] ([[maybe_unused]] char c) -> int { return 0xdeadbeef; }, // NOP
 		[] (char c) -> int {
 			switch (c) {
 				case ':': return PORT;
@@ -49,11 +49,12 @@ std::vector<std::string> parse(const std::string &http_url) {
 		},
 
 		[] (char c) -> int { return c != '#' ? QUERY : FRAG; },
-		[] (char c) -> int { return FRAG; } // NOP
+		[] ([[maybe_unused]] char c) -> int { return FRAG; } // NOP
 	};
 
 	std::vector<std::string> parts(FRAG+1, "");
-	int status = HOST, istr = 0;
+	int status = HOST;
+	size_t istr = 0;
 
 	if (const size_t index = http_url.find("://"); index != std::string::npos) {
 		parts.at(PROTO) = http_url.substr(0, index);
