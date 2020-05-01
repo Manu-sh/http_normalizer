@@ -66,10 +66,13 @@ std::vector<std::string> parse(const std::string &http_url) {
 		const char c = http_url.at(istr);
 		int n_status = fun.at(status)(c);
 
-		if (n_status == status)
-			parts.at(status).push_back(c);
+		if (n_status != status) {
+			status = n_status;
+			continue;
+		}
 
-		status = n_status;
+		parts.at(status).push_back(c);
+
 	}
 
 	return parts;
