@@ -53,8 +53,8 @@ std::vector<std::string> parse(const std::string &http_url) {
 	};
 
 	std::vector<std::string> parts(FRAG+1, "");
-	int status = HOST;
 	size_t istr = 0;
+	int status = HOST;
 
 	if (const size_t index = http_url.find("://"); index != std::string::npos) {
 		parts.at(PROTO) = http_url.substr(0, index);
@@ -64,7 +64,7 @@ std::vector<std::string> parse(const std::string &http_url) {
 	for (const auto len = http_url.length(); istr < len; ++istr) {
 
 		const char c = http_url.at(istr);
-		int n_status = fun.at(status)(c);
+		const int n_status = fun.at(status)(c);
 
 		if (n_status != status) {
 			status = n_status;
