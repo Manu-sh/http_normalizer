@@ -1,0 +1,3 @@
+[submodule "lib/http_normalizer_parts"]
+	path = lib/http_normalizer_parts
+	url = https://github.com/Manu-sh/http_normalizer_parts
