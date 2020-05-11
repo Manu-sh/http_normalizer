@@ -14,10 +14,13 @@ set(EXECUTABLE_OUTPUT_PATH, ${PROJECT_SOURCE_DIR}/bin)
 set(INC_PATH  ${PROJECT_SOURCE_DIR}/include)
 #set(SRC_PATH  ${PROJECT_SOURCE_DIR}/src)
 
+add_subdirectory(lib/http_normalizer_parts/http_parts)
+
+
 add_executable(${PROJECT_NAME} ${PROJECT_NAME}.cpp)
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${INC_PATH})
-# target_link_libraries(${PROJECT_NAME} PRIVATE torrent-rasterbar)
+target_link_libraries(${PROJECT_NAME} PRIVATE httparts)
 
 target_compile_options(${PROJECT_NAME}
 	PRIVATE

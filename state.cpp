@@ -1,3 +1,5 @@
+#include <http_parts/public/http_parts.hpp>
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -81,6 +83,11 @@ std::vector<std::string> parse(const std::string &http_url) {
 	return parts;
 }
 
+// const static std::array<state_t(*const)(char), FRAG+1> fun;
+
+
+// std::string normalize(const std::vector<std::string> &parts, std::vector<std::function<std::string(const std::string &p)>> &norms);
+
 using namespace std;
 
 int main() {
@@ -91,4 +98,5 @@ int main() {
 	for (const auto &s : parts)
 		cout << s << endl;
 
+	// apply_if(parts, functions);
 }
