@@ -1,4 +1,5 @@
-#include <http_parts/public/http_parts.hpp>
+#include <http_normalizer.hpp>
+#include <http_tokenizer.hpp>
 
 #include <iostream>
 #include <string>
@@ -6,97 +7,46 @@
 #include <array>
 #include <cstdint>
 
-enum: uint_fast8_t {
-	PROTO,
-	HOST,
-	PORT,
-	PATH,
-	QUERY,
-	FRAG
-};
 
+// constexpr static int HTTP_NORMALIZER_FLAGS = http_parts::OPT::HOSTNAME_STRIP_ALL_PREFIX_WWW | http_parts::OPT::PATH_REMOVE_DIRECTORY_INDEX;
+constexpr static int HTTP_NORMALIZER_FLAGS = 0;
 
-std::vector<std::string> parse(const std::string &http_url) {
+ // cout << *to_abs("/", "https://dUckduckgo.com", "/s%21%2f/?q=hsad&t=ffab&ia=web") << endl;
+ // return: https://duckduckgo.com/s!%2F/?ia=web&q=hsad&t=ffab
 
-	using state_t = uint_fast8_t;
+// arguments: base_url, current_page_url, href_content
+static inline std::shared_ptr<const std::string> to_abs(const std::string &node_base, const std::string &node_url, const std::string &anchor) {
 
-	const static std::array<state_t(*const)(char), FRAG+1> fun {
+    std::string cpy;
 
-		[] ([[maybe_unused]] char c) -> state_t { return 0xff; }, // NOP
-		[] (char c) -> state_t {
-			switch (c) {
-				case ':': return PORT;
-				case '/': return PATH;
-				case '?': return QUERY;
-				case '#': return FRAG;
-			}
+    // TODO: prende anche mailto:x@y.com
+    static const auto &is_relative = [] (const std::string &s) -> bool {
+        return s[0] == '/' || s[0] == '.' || http_normalizer::normalize(s, HTTP_NORMALIZER_FLAGS) == nullptr;
+    };
 
-			return HOST;
-		},
+    if (is_relative(anchor)) {
+        try { http_normalizer n{node_url, HTTP_NORMALIZER_FLAGS}; cpy = is_relative(node_base) ? *n.proto() + "://" + *n.hostname() + '/' + node_base + '/' + anchor : node_base + '/' + anchor; }
+        catch (...) { return nullptr; }
+    } else {
+        cpy = anchor;
+    }
 
-		[] (char c) -> state_t {
-			switch (c) {
-				case '/': return PATH;
-				case '?': return QUERY;
-				case '#': return FRAG;
-			}
+    auto shp = http_normalizer::normalize(cpy, HTTP_NORMALIZER_FLAGS);
+    if (!(shp = shp ? shp : http_normalizer::normalize( node_base + "/" + cpy, HTTP_NORMALIZER_FLAGS)))
+        return nullptr;
 
-			return PORT;
-		},
-
-		[] (char c) -> state_t {
-			switch (c) {
-				case '?': return QUERY;
-				case '#': return FRAG;
-			}
-
-			return PATH;
-		},
-
-		[] (char c) -> state_t { return c != '#' ? QUERY : FRAG; },
-		[] ([[maybe_unused]] char c) -> state_t { return FRAG; } // NOP
-	};
-
-	std::vector<std::string> parts(FRAG+1, "");
-	size_t istr = 0;
-
-	if (const size_t index = http_url.find("://"); index != std::string::npos) {
-		parts.at(PROTO) = http_url.substr(0, index);
-		istr = index + 3;
-	}
-
-	state_t status = HOST;
-	for (const auto len = http_url.length(); istr < len; ++istr) {
-
-		const char c = http_url.at(istr);
-		const state_t n_status = fun.at(status)(c);
-
-		if (n_status != status) {
-			status = n_status;
-			continue;
-		}
-
-		parts.at(status).push_back(c);
-
-	}
-
-	return parts;
+    return shp;
 }
-
-// const static std::array<state_t(*const)(char), FRAG+1> fun;
-
-
-// std::string normalize(const std::vector<std::string> &parts, std::vector<std::function<std::string(const std::string &p)>> &norms);
 
 using namespace std;
 
 int main() {
 
 	const string url = "http://hostname:8/path/?x=1&y=2#frag";
-	const auto &parts = parse(url);
+	const auto &parts = http_tokenizer::parse(url);
 
 	for (const auto &s : parts)
 		cout << s << endl;
 
-	// apply_if(parts, functions);
+	cout << *to_abs("/", "https://dUckduckgo.com", "/s%21%2f/?q=hsad&t=ffab&ia=web") << endl;
 }

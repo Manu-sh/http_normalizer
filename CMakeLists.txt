@@ -12,12 +12,13 @@ endif()
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -s")
 set(EXECUTABLE_OUTPUT_PATH, ${PROJECT_SOURCE_DIR}/bin)
 set(INC_PATH  ${PROJECT_SOURCE_DIR}/include)
-#set(SRC_PATH  ${PROJECT_SOURCE_DIR}/src)
+set(SRC_PATH  ${PROJECT_SOURCE_DIR}/src)
 
 add_subdirectory(lib/http_normalizer_parts/http_parts)
-
-
-add_executable(${PROJECT_NAME} ${PROJECT_NAME}.cpp)
+add_executable(${PROJECT_NAME} 
+	${SRC_PATH}/http_normalizer.cpp
+	${PROJECT_NAME}.cpp
+)
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${INC_PATH})
 target_link_libraries(${PROJECT_NAME} PRIVATE httparts)
