@@ -65,6 +65,10 @@ TEST_CASE("testing http_tokenizer::normalizer()") {
     REQUIRE(*http_normalizer::normalize("hTt%50://hostname.x:443/path/?b=2&a=1#frag", HTTP_NORMALIZER_FLAGS)  == "http://hostname.x:443/path/?a=1&b=2");
 
     REQUIRE(*http_normalizer::normalize("https://www.youtube.com:90?b=x&a=d", HTTP_NORMALIZER_FLAGS)  == "https://www.youtube.com:90/?a=d&b=x");
+    REQUIRE(*http_normalizer::normalize("https://www.youtube.com:90/?b=x&a=d", HTTP_NORMALIZER_FLAGS)  == "https://www.youtube.com:90/?a=d&b=x");
+    REQUIRE(*http_normalizer::normalize("https://www.youtube.com:90////?b=x&a=d", HTTP_NORMALIZER_FLAGS)  == "https://www.youtube.com:90/?a=d&b=x");
+    REQUIRE(*http_normalizer::normalize("https://www.youtube.com:90//x//?b=x&a=d", HTTP_NORMALIZER_FLAGS)  == "https://www.youtube.com:90/x/?a=d&b=x");
+    REQUIRE(*http_normalizer::normalize("https://www.youtube.com:90/../x/./?b=x&a=d", HTTP_NORMALIZER_FLAGS)  == "https://www.youtube.com:90/x/?a=d&b=x");
 }
 
 TEST_CASE("testing http_tokenizer::parse()") {
