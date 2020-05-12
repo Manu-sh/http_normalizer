@@ -44,6 +44,15 @@ static inline std::shared_ptr<const std::string> to_abs(const std::string &node_
     return shp;
 }
 
+/*
+	for (const auto &s : parts)
+		cout << s << endl;
+
+	cout << *to_abs("/", "https://dUckduckgo.com", "/s%21%2f/?q=hsad&t=ffab&ia=web") << endl;
+	// http://google.com/sadlife/?ia=web&t=ffab&x=y//s!//%3Fq
+	cout << *to_abs("google.com/sadlife/?x=y", "https://dUckduckgo.com", "/s%21%2f/?q=hsad&t=ffab&ia=web") << endl;
+*/
+
 using namespace std;
 
 TEST_CASE("testing http_tokenizer::normalizer()") {
@@ -185,14 +194,8 @@ TEST_CASE("testing http_tokenizer::parse()") {
 
 }
 
-/*
-int main() {
-    doctest::Context context;
-	const string url = "http://hostname:8/path/?x=1&y=2#frag";
-	const auto &parts = http_tokenizer::parse(url);
-}*/
+int main(int argc, char *argv[]) {
 
-int main(int argc, char **argv) {
     doctest::Context context;
     context.applyCommandLine(argc, argv);
 
@@ -204,14 +207,3 @@ int main(int argc, char **argv) {
         return res;
     }
 }
-
-
-
-/*
-	for (const auto &s : parts)
-		cout << s << endl;
-
-	cout << *to_abs("/", "https://dUckduckgo.com", "/s%21%2f/?q=hsad&t=ffab&ia=web") << endl;
-	// http://google.com/sadlife/?ia=web&t=ffab&x=y//s!//%3Fq
-	cout << *to_abs("google.com/sadlife/?x=y", "https://dUckduckgo.com", "/s%21%2f/?q=hsad&t=ffab&ia=web") << endl;
-*/
