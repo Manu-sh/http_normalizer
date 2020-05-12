@@ -48,10 +48,36 @@ using namespace std;
 
 TEST_CASE("testing http_tokenizer::parse()") {
 
-    const string url = "http://hostname:8/path/?x=1&y=2#frag";
-	const auto &parts = http_tokenizer::parse(url);
+    {
+        const auto parts = http_tokenizer::parse("http://hostname:8/path/?x=1&y=2#frag");
+        REQUIRE(parts[http_tokenizer::PROTO] == "http");
+        REQUIRE(parts[http_tokenizer::HOST]  == "hostname");
+        REQUIRE(parts[http_tokenizer::PORT]  == "8");
+        REQUIRE(parts[http_tokenizer::PATH]  == "path/");
+        REQUIRE(parts[http_tokenizer::QUERY] == "x=1&y=2");
+        REQUIRE(parts[http_tokenizer::FRAG]  == "frag");
+    }
 
-    REQUIRE(parts[http_tokenizer::PROTO] == "http");
+     {
+        const auto parts = http_tokenizer::parse("://hostname:8/path/?x=1&y=2#frag");
+        REQUIRE(parts[http_tokenizer::PROTO] == "");
+        REQUIRE(parts[http_tokenizer::HOST]  == "hostname");
+        REQUIRE(parts[http_tokenizer::PORT]  == "8");
+        REQUIRE(parts[http_tokenizer::PATH]  == "path/");
+        REQUIRE(parts[http_tokenizer::QUERY] == "x=1&y=2");
+        REQUIRE(parts[http_tokenizer::FRAG]  == "frag");
+    }
+
+     {
+        const auto parts = http_tokenizer::parse("//hostname:8/path/?x=1&y=2#frag");
+        REQUIRE(parts[http_tokenizer::PROTO] == "");
+        REQUIRE(parts[http_tokenizer::HOST]  == "");
+        REQUIRE(parts[http_tokenizer::PORT]  == "");
+        REQUIRE(parts[http_tokenizer::PATH]  == "/hostname:8/path/");
+        REQUIRE(parts[http_tokenizer::QUERY] == "x=1&y=2");
+        REQUIRE(parts[http_tokenizer::FRAG]  == "frag");
+    }
+
 }
 
 /*
