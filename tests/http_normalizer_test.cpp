@@ -68,7 +68,7 @@ TEST_CASE("testing http_tokenizer::parse()") {
         REQUIRE(parts[http_tokenizer::FRAG]  == "frag");
     }
 
-     {
+    {
         const auto parts = http_tokenizer::parse("//hostname:8/path/?x=1&y=2#frag");
         REQUIRE(parts[http_tokenizer::PROTO] == "");
         REQUIRE(parts[http_tokenizer::HOST]  == "");
@@ -76,6 +76,86 @@ TEST_CASE("testing http_tokenizer::parse()") {
         REQUIRE(parts[http_tokenizer::PATH]  == "/hostname:8/path/");
         REQUIRE(parts[http_tokenizer::QUERY] == "x=1&y=2");
         REQUIRE(parts[http_tokenizer::FRAG]  == "frag");
+    }
+
+    {
+        const auto parts = http_tokenizer::parse("http://hostname/path/?x=1&y=2#frag");
+        REQUIRE(parts[http_tokenizer::PROTO] == "http");
+        REQUIRE(parts[http_tokenizer::HOST]  == "hostname");
+        REQUIRE(parts[http_tokenizer::PORT]  == "");
+        REQUIRE(parts[http_tokenizer::PATH]  == "path/");
+        REQUIRE(parts[http_tokenizer::QUERY] == "x=1&y=2");
+        REQUIRE(parts[http_tokenizer::FRAG]  == "frag");
+    }
+
+    {
+        const auto parts = http_tokenizer::parse("http://hostname/?x=1&y=2#frag");
+        REQUIRE(parts[http_tokenizer::PROTO] == "http");
+        REQUIRE(parts[http_tokenizer::HOST]  == "hostname");
+        REQUIRE(parts[http_tokenizer::PORT]  == "");
+        REQUIRE(parts[http_tokenizer::PATH]  == "");
+        REQUIRE(parts[http_tokenizer::QUERY] == "x=1&y=2");
+        REQUIRE(parts[http_tokenizer::FRAG]  == "frag");
+    }
+
+    {
+        const auto parts = http_tokenizer::parse("http://hostname?x=1&y=2#frag");
+        REQUIRE(parts[http_tokenizer::PROTO] == "http");
+        REQUIRE(parts[http_tokenizer::HOST]  == "hostname");
+        REQUIRE(parts[http_tokenizer::PORT]  == "");
+        REQUIRE(parts[http_tokenizer::PATH]  == "");
+        REQUIRE(parts[http_tokenizer::QUERY] == "x=1&y=2");
+        REQUIRE(parts[http_tokenizer::FRAG]  == "frag");
+    }
+
+    {
+        const auto parts = http_tokenizer::parse("http://hostname/path/#frag");
+        REQUIRE(parts[http_tokenizer::PROTO] == "http");
+        REQUIRE(parts[http_tokenizer::HOST]  == "hostname");
+        REQUIRE(parts[http_tokenizer::PORT]  == "");
+        REQUIRE(parts[http_tokenizer::PATH]  == "path/");
+        REQUIRE(parts[http_tokenizer::QUERY] == "");
+        REQUIRE(parts[http_tokenizer::FRAG]  == "frag");
+    }
+
+    {
+        const auto parts = http_tokenizer::parse("http://hostname/path/");
+        REQUIRE(parts[http_tokenizer::PROTO] == "http");
+        REQUIRE(parts[http_tokenizer::HOST]  == "hostname");
+        REQUIRE(parts[http_tokenizer::PORT]  == "");
+        REQUIRE(parts[http_tokenizer::PATH]  == "path/");
+        REQUIRE(parts[http_tokenizer::QUERY] == "");
+        REQUIRE(parts[http_tokenizer::FRAG]  == "");
+    }
+
+    {
+        const auto parts = http_tokenizer::parse("http://hostname/path");
+        REQUIRE(parts[http_tokenizer::PROTO] == "http");
+        REQUIRE(parts[http_tokenizer::HOST]  == "hostname");
+        REQUIRE(parts[http_tokenizer::PORT]  == "");
+        REQUIRE(parts[http_tokenizer::PATH]  == "path");
+        REQUIRE(parts[http_tokenizer::QUERY] == "");
+        REQUIRE(parts[http_tokenizer::FRAG]  == "");
+    }
+
+    {
+        const auto parts = http_tokenizer::parse("http://hostname#frag");
+        REQUIRE(parts[http_tokenizer::PROTO] == "http");
+        REQUIRE(parts[http_tokenizer::HOST]  == "hostname");
+        REQUIRE(parts[http_tokenizer::PORT]  == "");
+        REQUIRE(parts[http_tokenizer::PATH]  == "");
+        REQUIRE(parts[http_tokenizer::QUERY] == "");
+        REQUIRE(parts[http_tokenizer::FRAG]  == "frag");
+    }
+
+    {
+        const auto parts = http_tokenizer::parse("http://hostname");
+        REQUIRE(parts[http_tokenizer::PROTO] == "http");
+        REQUIRE(parts[http_tokenizer::HOST]  == "hostname");
+        REQUIRE(parts[http_tokenizer::PORT]  == "");
+        REQUIRE(parts[http_tokenizer::PATH]  == "");
+        REQUIRE(parts[http_tokenizer::QUERY] == "");
+        REQUIRE(parts[http_tokenizer::FRAG]  == "");
     }
 
 }
