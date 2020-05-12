@@ -53,6 +53,16 @@ TEST_CASE("testing http_tokenizer::normalizer()") {
 
     // TODO: a single label hostname not allowed
     REQUIRE(*http_normalizer::normalize("http://hostname.x:8/path/?x=1&y=2#frag", HTTP_NORMALIZER_FLAGS) == "http://hostname.x:8/path/?x=1&y=2");
+    REQUIRE(*http_normalizer::normalize("hTt%50S://hostname.x:8/path/?x=1&y=2#frag", HTTP_NORMALIZER_FLAGS) == "https://hostname.x:8/path/?x=1&y=2");
+
+    // sort query parameter
+    REQUIRE(*http_normalizer::normalize("hTt%50S://hostname.x:8/path/?b=2&a=1#frag", HTTP_NORMALIZER_FLAGS) == "https://hostname.x:8/path/?a=1&b=2");
+
+    // test default port removed
+    REQUIRE(*http_normalizer::normalize("hTt%50://hostname.x:80/path/?b=2&a=1#frag", HTTP_NORMALIZER_FLAGS) == "http://hostname.x/path/?a=1&b=2");
+    REQUIRE(*http_normalizer::normalize("hTt%50S://hostname.x:443/path/?b=2&a=1#frag", HTTP_NORMALIZER_FLAGS) == "https://hostname.x/path/?a=1&b=2");
+    REQUIRE(*http_normalizer::normalize("hTt%50S://hostname.x:80/path/?b=2&a=1#frag", HTTP_NORMALIZER_FLAGS) == "https://hostname.x:80/path/?a=1&b=2");
+    REQUIRE(*http_normalizer::normalize("hTt%50://hostname.x:443/path/?b=2&a=1#frag", HTTP_NORMALIZER_FLAGS) == "http://hostname.x:443/path/?a=1&b=2");
 
 }
 
