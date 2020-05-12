@@ -1,11 +1,17 @@
+#define DOCTEST_CONFIG_IMPLEMENT
+
 #include <http_normalizer.hpp>
 #include <http_tokenizer.hpp>
 
+#include <doctest/doctest.h>
+
+DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN
 #include <iostream>
 #include <string>
 #include <vector>
 #include <array>
 #include <cstdint>
+DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
 
 
 // constexpr static int HTTP_NORMALIZER_FLAGS = http_parts::OPT::HOSTNAME_STRIP_ALL_PREFIX_WWW | http_parts::OPT::PATH_REMOVE_DIRECTORY_INDEX;
@@ -40,15 +46,39 @@ static inline std::shared_ptr<const std::string> to_abs(const std::string &node_
 
 using namespace std;
 
-int main() {
+TEST_CASE("testing the factorial function") {
+    REQUIRE(0 == 1);
+}
 
+/*
+int main() {
+    doctest::Context context;
 	const string url = "http://hostname:8/path/?x=1&y=2#frag";
 	const auto &parts = http_tokenizer::parse(url);
+}*/
 
+int main(int argc, char **argv) {
+    doctest::Context context;
+    context.applyCommandLine(argc, argv);
+
+    int res = context.run(); // run doctest
+
+    // important - query flags (and --exit) rely on the user doing this
+    if (context.shouldExit()) {
+        // propagate the result of the tests
+        return res;
+    }
+
+    printf("%s\n", "Hello, World!");
+}
+
+
+
+/*
 	for (const auto &s : parts)
 		cout << s << endl;
 
 	cout << *to_abs("/", "https://dUckduckgo.com", "/s%21%2f/?q=hsad&t=ffab&ia=web") << endl;
 	// http://google.com/sadlife/?ia=web&t=ffab&x=y//s!//%3Fq
 	cout << *to_abs("google.com/sadlife/?x=y", "https://dUckduckgo.com", "/s%21%2f/?q=hsad&t=ffab&ia=web") << endl;
-}
+*/
