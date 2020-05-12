@@ -49,4 +49,6 @@ int main() {
 		cout << s << endl;
 
 	cout << *to_abs("/", "https://dUckduckgo.com", "/s%21%2f/?q=hsad&t=ffab&ia=web") << endl;
+	// http://google.com/sadlife/?ia=web&t=ffab&x=y//s!//%3Fq
+	cout << *to_abs("google.com/sadlife/?x=y", "https://dUckduckgo.com", "/s%21%2f/?q=hsad&t=ffab&ia=web") << endl;
 }
