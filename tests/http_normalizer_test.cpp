@@ -46,6 +46,16 @@ static inline std::shared_ptr<const std::string> to_abs(const std::string &node_
 
 using namespace std;
 
+TEST_CASE("testing http_tokenizer::normalizer()") {
+
+    // TODO: #fragmet silently stripped away
+    // REQUIRE(*http_normalizer::normalize("http://hostname:8/path/?x=1&y=2#frag", HTTP_NORMALIZER_FLAGS) == "http://hostname:8/path/?x=1&y=2");
+
+    // TODO: a single label hostname not allowed
+    REQUIRE(*http_normalizer::normalize("http://hostname.x:8/path/?x=1&y=2#frag", HTTP_NORMALIZER_FLAGS) == "http://hostname.x:8/path/?x=1&y=2");
+
+}
+
 TEST_CASE("testing http_tokenizer::parse()") {
 
     {
