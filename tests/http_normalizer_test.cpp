@@ -46,8 +46,12 @@ static inline std::shared_ptr<const std::string> to_abs(const std::string &node_
 
 using namespace std;
 
-TEST_CASE("testing the factorial function") {
-    REQUIRE(0 == 1);
+TEST_CASE("testing http_tokenizer::parse()") {
+
+    const string url = "http://hostname:8/path/?x=1&y=2#frag";
+	const auto &parts = http_tokenizer::parse(url);
+
+    REQUIRE(parts[http_tokenizer::PROTO] == "http");
 }
 
 /*
@@ -68,8 +72,6 @@ int main(int argc, char **argv) {
         // propagate the result of the tests
         return res;
     }
-
-    printf("%s\n", "Hello, World!");
 }
 
 
