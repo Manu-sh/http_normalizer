@@ -58,7 +58,7 @@ TEST_CASE("testing http_tokenizer::parse()") {
         REQUIRE(parts[http_tokenizer::FRAG]  == "frag");
     }
 
-     {
+    {
         const auto parts = http_tokenizer::parse("://hostname:8/path/?x=1&y=2#frag");
         REQUIRE(parts[http_tokenizer::PROTO] == "");
         REQUIRE(parts[http_tokenizer::HOST]  == "hostname");
