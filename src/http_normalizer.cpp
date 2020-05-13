@@ -69,6 +69,7 @@ std::shared_ptr<const std::string> http_normalizer::normalized() const {
 		{":"sv,   &http_normalizer::port},
 		{"/"sv,   &http_normalizer::path},
 		{"/?"sv,  &http_normalizer::query}
+		// {"#"sv,  &http_normalizer::fragment}
 		/* fragments are ignored */
 	};
 

@@ -11,6 +11,7 @@ class http_normalizer { /* http url parser/normalizer */
 
 	public:
 
+		// TODO: add STRIP_FRAGMENT as OPTIONAL
 		// see also http_parts::OPT
 		enum OPT: unsigned char {
 			HOSTNAME_STRIP_ALL_PREFIX_WWW = 1, // normalize_hostname_opt
