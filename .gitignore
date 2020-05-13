@@ -2,4 +2,5 @@
 .idea/*
 
 http_normalizer/build/*
+http_normalizer/examples/build/*
 php-extension/build/*

@@ -2,5 +2,8 @@
 <?php
 
     echo http_normalize('https://www.youtube.com:90/../x/./?b=x&a=d'), "\n";
+    echo http_normalize('https://www.youtube.com:90/'), "\n";
+    echo http_normalize('https://www.youtube.com:90/xyz/'), "\n";
+    echo http_normalize('https://www.youtube.com:90/xyz?z=&x&y'), "\n";
 
 ?>
