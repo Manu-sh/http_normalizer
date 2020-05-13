@@ -1,4 +1,4 @@
-#include <http_normalizer.hpp>
+#include <http_normalizer/public/http_normalizer.hpp>
 #include <phpcpp.h>
 
 // constexpr static int HTTP_NORMALIZER_FLAGS = http_parts::OPT::HOSTNAME_STRIP_ALL_PREFIX_WWW | http_parts::OPT::PATH_REMOVE_DIRECTORY_INDEX;

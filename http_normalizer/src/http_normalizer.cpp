@@ -1,5 +1,5 @@
-#include <http_normalizer.hpp>
-#include <http_tokenizer.hpp>
+#include <http_normalizer/public/http_normalizer.hpp>
+#include <http_normalizer/private/http_tokenizer.hpp>
 #include <http_parts/public/http_parts.hpp>
 
 #include <sstream>
