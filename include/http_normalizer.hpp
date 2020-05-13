@@ -12,7 +12,7 @@ class http_normalizer { /* http url parser/normalizer */
 	public:
 
 		// see also http_parts::OPT
-		enum OPT: unsigned char {
+		enum : unsigned char {
 			HOSTNAME_STRIP_ALL_PREFIX_WWW = 1, // normalize_hostname_opt
 			PATH_REMOVE_DIRECTORY_INDEX   = 1 << 1,
 			KEEP_FRAGMENT                 = 1 << 2

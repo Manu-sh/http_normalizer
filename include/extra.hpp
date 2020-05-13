@@ -4,8 +4,17 @@
 #include <memory>
 #include <string>
 
- // cout << *to_abs("/", "https://dUckduckgo.com", "/s%21%2f/?q=hsad&t=ffab&ia=web") << endl;
- // return: https://duckduckgo.com/s!%2F/?ia=web&q=hsad&t=ffab
+// cout << *to_abs("/", "https://dUckduckgo.com", "/s%21%2f/?q=hsad&t=ffab&ia=web") << endl;
+// return: https://duckduckgo.com/s!%2F/?ia=web&q=hsad&t=ffab
+
+/*
+	for (const auto &s : parts)
+		cout << s << endl;
+
+	cout << *to_abs("/", "https://dUckduckgo.com", "/s%21%2f/?q=hsad&t=ffab&ia=web") << endl;
+	// http://google.com/sadlife/?ia=web&t=ffab&x=y//s!//%3Fq
+	cout << *to_abs("google.com/sadlife/?x=y", "https://dUckduckgo.com", "/s%21%2f/?q=hsad&t=ffab&ia=web") << endl;
+*/
 
 // arguments: base_url, current_page_url, href_content
 static inline std::shared_ptr<const std::string> to_abs(const std::string &node_base, const std::string &node_url, const std::string &anchor, int HTTP_NORMALIZER_FLAGS = 0) {
@@ -30,12 +39,3 @@ static inline std::shared_ptr<const std::string> to_abs(const std::string &node_
 
     return shp;
 }
-
-/*
-	for (const auto &s : parts)
-		cout << s << endl;
-
-	cout << *to_abs("/", "https://dUckduckgo.com", "/s%21%2f/?q=hsad&t=ffab&ia=web") << endl;
-	// http://google.com/sadlife/?ia=web&t=ffab&x=y//s!//%3Fq
-	cout << *to_abs("google.com/sadlife/?x=y", "https://dUckduckgo.com", "/s%21%2f/?q=hsad&t=ffab&ia=web") << endl;
-*/
