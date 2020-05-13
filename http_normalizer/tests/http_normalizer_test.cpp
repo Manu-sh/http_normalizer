@@ -13,14 +13,13 @@ DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN
 #include <cstdint>
 DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
 
-// constexpr static int HTTP_NORMALIZER_FLAGS = http_parts::OPT::HOSTNAME_STRIP_ALL_PREFIX_WWW | http_parts::OPT::PATH_REMOVE_DIRECTORY_INDEX;
+// constexpr static int HTTP_NORMALIZER_FLAGS = http_parts::HOSTNAME_STRIP_ALL_PREFIX_WWW | http_parts::PATH_REMOVE_DIRECTORY_INDEX;
 constexpr static int HTTP_NORMALIZER_FLAGS = 0;
 
 using namespace std;
 
 TEST_CASE("testing http_tokenizer::normalizer()") {
 
-    // TODO: #fragmet silently stripped away
     // TODO: a single label hostname not allowed
 
     // REQUIRE(*http_normalizer::normalize("http://hostname:8/path/?x=1&y=2#frag", HTTP_NORMALIZER_FLAGS) == "http://hostname:8/path/?x=1&y=2");
