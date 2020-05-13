@@ -11,11 +11,11 @@ class http_normalizer { /* http url parser/normalizer */
 
 	public:
 
-		// TODO: add STRIP_FRAGMENT as OPTIONAL
 		// see also http_parts::OPT
 		enum OPT: unsigned char {
 			HOSTNAME_STRIP_ALL_PREFIX_WWW = 1, // normalize_hostname_opt
-			PATH_REMOVE_DIRECTORY_INDEX   = 1 << 1
+			PATH_REMOVE_DIRECTORY_INDEX   = 1 << 1,
+			KEEP_FRAGMENT                 = 1 << 2
 		};
 
 		explicit http_normalizer(const std::string &u, int flags = 0);

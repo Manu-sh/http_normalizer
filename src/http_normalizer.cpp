@@ -69,17 +69,25 @@ std::shared_ptr<const std::string> http_normalizer::normalized() const {
 		{":"sv,   &http_normalizer::port},
 		{"/"sv,   &http_normalizer::path},
 		{"/?"sv,  &http_normalizer::query}
-		// {"#"sv,  &http_normalizer::fragment}
 		/* fragments are ignored */
 	};
 
+	static const std::initializer_list<std::pair<std::string_view, decltype(&http_normalizer::proto)>> pairs_keep_frag{
+		{""sv,    &http_normalizer::proto}, /* string to prepend, function to call */
+		{"://"sv, &http_normalizer::hostname}, 
+		{":"sv,   &http_normalizer::port},
+		{"/"sv,   &http_normalizer::path},
+		{"/?"sv,  &http_normalizer::query},
+		{"#"sv,  &http_normalizer::fragment}
+	};
+	
 	if (m_normalized != nullptr)
 		return m_normalized;
 
 	std::ostringstream ret;
 
 	try {
-		for (const auto &pair : pairs)
+		for (const auto &pair : !(m_flags & KEEP_FRAGMENT) ? pairs : pairs_keep_frag)
 			if (auto cb = pair.second; (*this.*cb)() != nullptr) 
 				ret << pair.first << *(*this.*cb)();
 	} catch (...) { return nullptr; }
