@@ -1,5 +1,13 @@
 # Http Normalizer
 
+```bash
+# installing dependencies for tests
+yay -S --noconfirm doctest
+mkdir -p build && cd build
+cmake ..
+make && make test
+```
+
 The trailing slash is always removed.
 
 * //hostname.com => default protocol (per aggiungere sta feature è necessario modificare il tokenizzatore)
