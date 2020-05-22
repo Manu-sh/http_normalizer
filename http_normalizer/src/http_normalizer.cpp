@@ -72,13 +72,14 @@ std::shared_ptr<const std::string> http_normalizer::normalized() const {
 		/* fragments are ignored */
 	};
 
+	// i know this is ugly but i have not so much time
 	static const std::initializer_list<std::pair<std::string_view, decltype(&http_normalizer::proto)>> pairs_keep_frag{
 		{""sv,    &http_normalizer::proto}, /* string to prepend, function to call */
 		{"://"sv, &http_normalizer::hostname}, 
 		{":"sv,   &http_normalizer::port},
 		{"/"sv,   &http_normalizer::path},
 		{"/?"sv,  &http_normalizer::query},
-		{"#"sv,  &http_normalizer::fragment}
+		{"#"sv,   &http_normalizer::fragment}
 	};
 	
 	if (m_normalized != nullptr)
