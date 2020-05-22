@@ -8,6 +8,8 @@ cmake ..
 make && make test
 ```
 
+for building the php extension [phpcpp](http://www.php-cpp.com/documentation/install) is required
+
 The trailing slash is always removed.
 
 * //hostname.com => default protocol (per aggiungere sta feature è necessario modificare il tokenizzatore)
