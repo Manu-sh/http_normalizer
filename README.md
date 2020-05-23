@@ -1,7 +1,7 @@
 # Http Normalizer
 
 TODO:
-* aggiungere to_abs() all'estensione in quanto essenziale nella risoluzione degli url relativi al tag `<base>`
+* aggiungere `to_abs()` all'estensione in quanto essenziale nella risoluzione degli url relativi al tag `<base>`
 
 ```bash
 # installing dependencies for tests
