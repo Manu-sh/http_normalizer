@@ -7,7 +7,6 @@
 /*
     [[ Attention this function is just a sample and isn't intend to be used ]]
 
-
     For example calling this function on the following situations
 
     <!-- page_url: https://dUckduckgo.com -->
@@ -31,9 +30,9 @@ static inline std::shared_ptr<const std::string> to_abs(const std::string &html_
 
     std::string cpy;
 
-    // TODO: prende anche mailto:x@y.com
+    // prende anche mailto:x@y.com fixed?
     static const auto &is_relative = [HTTP_NORMALIZER_FLAGS] (const std::string &s) -> bool {
-        return s[0] == '/' || s[0] == '.' || http_normalizer::normalize(s, HTTP_NORMALIZER_FLAGS) == nullptr;
+        return s[0] == '/' || s[0] == '.'; // || http_normalizer::normalize(s, HTTP_NORMALIZER_FLAGS) == nullptr;
     };
 
     if (is_relative(href_content)) {

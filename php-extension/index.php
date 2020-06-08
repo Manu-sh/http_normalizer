@@ -8,4 +8,5 @@
 
     echo http_normalize_to_abs('google.com/sadlife/?x=y', 'https://dUckduckgo.com', '/s%21%2f/?q=hsad&t=ffab&ia=web'), "\n";
     echo http_normalize_to_abs('/', 'https://dUckduckgo.com', '/s%21%2f/?q=hsad&t=ffab&ia=web'), "\n";
+    echo http_normalize_to_abs('/', 'https://dUckduckgo.com', 'mailto:x@y.com'), "\n";
 ?>
