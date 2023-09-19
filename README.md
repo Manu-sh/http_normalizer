@@ -3,9 +3,17 @@
 ```bash
 # installing dependencies for tests
 yay -S --noconfirm doctest
+
+# to build only http_normalizer
+cd http_normalizer
 mkdir -p build && cd build
 cmake ..
-make && make test
+make -j`nproc --all` && make test
+
+# to build and install the php-extension
+cd php-extension
+make
+sudo make install
 ```
 
 for building the php extension [phpcpp](http://www.php-cpp.com/documentation/install) is required
