@@ -21,6 +21,7 @@ set(INC_PATH  ${PROJECT_SOURCE_DIR}/include)
 set(SRC_PATH  ${PROJECT_SOURCE_DIR}/src)
 set(LIB_PATH  ${PROJECT_SOURCE_DIR}/lib)
 
+
 # self
 add_library(${PROJECT_NAME} STATIC ${SRC_PATH}/http_normalizer.cpp)
 target_include_directories(${PROJECT_NAME} PUBLIC ${INC_PATH})

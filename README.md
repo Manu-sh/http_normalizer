@@ -4,6 +4,14 @@
 # installing dependencies for tests
 yay -S --noconfirm doctest
 
+# clone the project and fetch any submodules
+git clone git@github.com:Manu-sh/http_normalizer.git
+cd http_normalizer
+git submodule update --init --recursive 
+
+
+
+
 # to build only http_normalizer
 cd http_normalizer
 mkdir -p build && cd build

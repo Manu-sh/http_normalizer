@@ -3,4 +3,5 @@
 
 http_normalizer/build/*
 http_normalizer/examples/build/*
+http_normalizer/lib/*
 php-extension/build/*
